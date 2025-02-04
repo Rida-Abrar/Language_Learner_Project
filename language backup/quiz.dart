@@ -20,7 +20,7 @@ class _QuizPageState extends State<QuizPage> {
   final List<String> _sheetUrls = [
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSMFj1cCU5B-pBowNeh9_0EHQoQpk-K5ISW-XbOl3KsUhFD4RUXsOpY3eFE8NSVY6J8yCCgy9bMLaEm/pub?output=csv",
     "https://docs.google.com/spreadsheets/d/1NOiO2JT61x53hjCHYc5Bavnfp8PRXR9CXM9GCXQp7dg/export?format=csv&gid=1407590144",
-    "https://docs.google.com/spreadsheets/d/e/QUIZ3_URL/pub?output=csv",
+    "https://docs.google.com/spreadsheets/d/1bcyayEEJ0m1K-NJJLNtVbnBtdQFYhSbp7GHB9HUUZcw/export?format=csv&gid=1915656861",
     // Add URLs for quizzes 4–12
   ];
 
@@ -84,9 +84,8 @@ class _QuizPageState extends State<QuizPage> {
         List<String> columns = row.split(',');
 
         if (columns.length >= 3) {  // Ensure enough columns exist
-          // Adjust column indexes based on sheetIndex
-          int emailCol = (sheetIndex == 2) ? 1 : columns.length - 1; // Email in 2nd column if i == 2, else last column
-          int scoreCol = (sheetIndex == 2) ? 2 : 1; // Score in 3rd column if i == 2, else 2nd column
+          int emailCol = (sheetIndex == 2 || sheetIndex == 3) ? 1 : columns.length - 1; // Email in 2nd column if i == 2 or i == 3, else last column
+          int scoreCol = (sheetIndex == 2 || sheetIndex == 3) ? 2 : 1; // Score in 3rd column if i == 2 or i == 3, else 2nd column
 
           String emailInSheet = columns[emailCol].trim();
           String scoreStr = columns[scoreCol].trim();
