@@ -19,7 +19,7 @@ class _QuizPageState extends State<QuizPage> {
   // List of Google Sheet URLs for 12 quizzes
   final List<String> _sheetUrls = [
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSMFj1cCU5B-pBowNeh9_0EHQoQpk-K5ISW-XbOl3KsUhFD4RUXsOpY3eFE8NSVY6J8yCCgy9bMLaEm/pub?output=csv",
-    "https://docs.google.com/spreadsheets/d/1w_7jwxS1xWVEiB9uP70WQCXKeJ2QoJ91N9UwBs9iv5o/edit?resourcekey=&gid=195684434#gid=195684434",
+    "https://docs.google.com/spreadsheets/d/1NOiO2JT61x53hjCHYc5Bavnfp8PRXR9CXM9GCXQp7dg/export?format=csv&gid=1407590144",
     "https://docs.google.com/spreadsheets/d/e/QUIZ3_URL/pub?output=csv",
     // Add URLs for quizzes 4–12
   ];
@@ -45,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
   Future<void> _fetchAllQuizScores() async {
     try {
       for (int i = 0; i < _sheetUrls.length; i++) {
-        int? score = await _fetchQuizScoreFromSheet(_sheetUrls[i]);
+        int? score = await _fetchQuizScoreFromSheet(_sheetUrls[i], i + 1); // Pass 'i + 1' as sheetIndex
         if (score != null) {
           quizScores[i + 1] = score; // Store the score for each quiz
           await _saveScoreToFirestore(i + 1, score); // Save to Firestore
@@ -63,7 +63,7 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-  Future<int?> _fetchQuizScoreFromSheet(String url) async {
+  Future<int?> _fetchQuizScoreFromSheet(String url, int sheetIndex) async {
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -80,12 +80,16 @@ class _QuizPageState extends State<QuizPage> {
 
       int maxScore = 0;
 
-      for (var row in rows.skip(1)) {
+      for (var row in rows.skip(1)) { // Skip header row
         List<String> columns = row.split(',');
 
-        if (columns.length >= 12) {
-          String emailInSheet = columns.last.trim();
-          String scoreStr = columns[1].trim();
+        if (columns.length >= 3) {  // Ensure enough columns exist
+          // Adjust column indexes based on sheetIndex
+          int emailCol = (sheetIndex == 2) ? 1 : columns.length - 1; // Email in 2nd column if i == 2, else last column
+          int scoreCol = (sheetIndex == 2) ? 2 : 1; // Score in 3rd column if i == 2, else 2nd column
+
+          String emailInSheet = columns[emailCol].trim();
+          String scoreStr = columns[scoreCol].trim();
 
           if (emailInSheet == userEmail) {
             int? currentScore = _parseScore(scoreStr);
@@ -102,6 +106,7 @@ class _QuizPageState extends State<QuizPage> {
       return null;
     }
   }
+
 
   int? _parseScore(String scoreStr) {
     try {
