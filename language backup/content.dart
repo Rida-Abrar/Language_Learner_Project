@@ -172,8 +172,8 @@ class ContentPage extends StatelessWidget {
 
   final Map<String, String> moduleQuizzes = {
     "Modulo 1: Introduction to French": "https://docs.google.com/forms/d/1SK05m8Aa1HNNQASVbOGNZQ3BxbEp0n67rraJDPBze8E/edit#responses",
-    "Modulo 2: Basic Vocabulary & Phrases": "https://docs.google.com/forms/d/1OUEhI0OtpqWPZ9Ykw8ZeyD1To4lKbiUOk_UMS6Y-tRE/edit#responses",
-    "Modulo 3: Basic Grammar": "https://docs.google.com/forms/d/quiz3",
+    "Modulo 2: Basic Vocabulary & Phrases": "https://docs.google.com/forms/d/1JDP0SsGSgGi0m4l3yyGMBNbMPf4Xig_ftx6YEq-7vto/edit#responses",
+    "Modulo 3: Basic Grammar": "https://docs.google.com/forms/d/1d_jrd25NoSqWfyWfoTezs_oHkjEkXMrqpClYcBPeBHY/edit#responses",
     "Modulo 4: Building Simple Sentences": "https://docs.google.com/forms/d/quiz3",
     "Modulo 5: Intermediate Grammar & Vocabulary": "https://docs.google.com/forms/d/quiz3",
     "Modulo 6: Conversational Practice": "https://docs.google.com/forms/d/quiz3",
